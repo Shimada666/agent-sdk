@@ -794,6 +794,15 @@ def test_llm_create_agent_uses_settings_llm_and_tools() -> None:
     assert agent.tools == tools
 
 
+def test_openhands_create_agent_uses_inline_system_prompt() -> None:
+    agent = OpenHandsAgentSettings(
+        llm=LLM(model="test-model"),
+        system_prompt="Mizzen Analysis",
+    ).create_agent()
+
+    assert agent.static_system_message == "Mizzen Analysis"
+
+
 def test_llm_create_agent_defaults_tool_concurrency_limit_to_one() -> None:
     agent = OpenHandsAgentSettings(llm=LLM(model="test-model")).create_agent()
     assert agent.tool_concurrency_limit == 1

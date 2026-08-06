@@ -1276,6 +1276,13 @@ class OpenHandsAgentSettings(AgentSettingsBase):
             ).model_dump()
         },
     )
+    system_prompt: str | None = Field(
+        default=None,
+        description=(
+            "Inline system prompt passed to the Agent instead of the built-in "
+            "OpenHands prompt. Dynamic agent context is still appended."
+        ),
+    )
     condenser: CondenserSettingsConfig = Field(
         default_factory=LLMSummarizingCondenserSettings,
         description="Condenser settings for the agent.",
@@ -1342,6 +1349,7 @@ class OpenHandsAgentSettings(AgentSettingsBase):
             mcp_config=self.mcp_config,
             include_default_tools=include_default_tools,
             agent_context=self.agent_context,
+            system_prompt=self.system_prompt,
             condenser=condenser,
             critic=self.build_critic(),
             tool_concurrency_limit=self.tool_concurrency_limit,
